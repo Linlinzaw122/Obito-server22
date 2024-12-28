@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBITO BOT - Generate Gift Code</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #8a2be2, #2e8b57);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .container {
+            background: #222;
+            border-radius: 10px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid #444;
+            outline: none;
+            background: #333;
+            color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #8a2be2;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #8a2be2;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #7a1cc7;
+        }
+
+        .gift-code, .error-message, .loading {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .gift-code {
+            color: #4CAF50;
+        }
+
+        .error-message {
+            color: #FF4C4C;
+        }
+
+        .loading {
+            color: #f39c12;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>OBITO BOT</h1>
+    <p>Enter LICENSE KEY to generate your gift code</p>
+    
+    <input type="text" id="licenseKey" placeholder="Enter License Key" />
+    <button onclick="generateGiftCode()" id="generateButton">Generate Gift Code</button>
+
+    <div class="loading" id="loadingMessage"></div>
+    <div class="gift-code" id="giftCode"></div>
+    <div class="error-message" id="errorMessage"></div>
+</div>
+
+<script>
+    let isGiftCodeGenerated = false; // Flag to check if gift code is generated
+    let generatedGiftCode = ''; // Store the generated gift code
+
+    function generateGiftCode() {
+        const licenseKey = document.getElementById('licenseKey').value.trim();
+
+        if (!licenseKey) {
+            alert('Please enter a license key.');
+            return;
+        }
+
+        // Check if the gift code has already been generated
+        if (isGiftCodeGenerated) {
+            alert('You have already generated a gift code.');
+            return;
+        }
+
+        // Show "Generating..." message and disable the button while generating
+        document.getElementById('loadingMessage').innerText = 'Generating...';
+        document.getElementById('generateButton').disabled = true;
+
+        let giftCode = '';
+        let errorMessage = '';
+
+        // Only if the license key is "obito11", generate a gift code
+        if (licenseKey === 'obito11') {
+            // Choose between three predefined gift codes
+            const randomCode = Math.floor(Math.random() * 3);
+            if (randomCode === 0) {
+                giftCode = '3D4384BE96BA5971575BC0A1B5E1870E';  // First gift code
+            } else if (randomCode === 1) {
+                giftCode = '3D4384BE96BA5971575BC0A1B5E1870E'; // Second gift code
+            } else {
+                giftCode = '3D4384BE96BA5971575BC0A1B5E1870E'; // Third gift code
+            }
+
+            // Store the generated gift code and mark it as generated
+            generatedGiftCode = giftCode;
+            isGiftCodeGenerated = true;
+        } else {
+            errorMessage = 'Invalid License Key'; // Show error if the key is not "OBITO"
+        }
+
+        // Hide "Generating..." message and show the result
+        setTimeout(() => {
+            document.getElementById('loadingMessage').innerText = '';
+            document.getElementById('generateButton').disabled = false;
+
+            const giftCodeElement = document.getElementById('giftCode');
+            const errorMessageElement = document.getElementById('errorMessage');
+
+            if (giftCode) {
+                giftCodeElement.innerText = `Your Gift Code: ${giftCode}`;
+                errorMessageElement.innerText = ''; // Clear any previous error message
+                giftCodeElement.classList.add('show');
+                errorMessageElement.classList.remove('show');
+            } else {
+                giftCodeElement.innerText = ''; // Clear any previous gift code
+                errorMessageElement.innerText = errorMessage; // Show error message
+                errorMessageElement.classList.add('show');
+                giftCodeElement.classList.remove('show');
+            }
+        }, 2000); // Simulate delay for generating gift code
+    }
+
+    // Clear messages when the page loads
+    window.onload = function() {
+        document.getElementById('giftCode').classList.remove('show');
+        document.getElementById('errorMessage').classList.remove('show');
+        document.getElementById('loadingMessage').innerText = '';
+    }
+</script>
+
+</body>
+</html>
